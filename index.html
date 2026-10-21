@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoLógica — Descarte Consciente de Óleo de Cozinha</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #1e293b;
+      background-color: #f8fafc;
+      line-height: 1.6;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #16a34a;
+    }
+    nav .logo span {
+      color: #0284c7;
+    }
+    nav .links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    nav .links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #475569;
+      transition: color 0.2s;
+    }
+    nav .links a:hover {
+      color: #16a34a;
+    }
+    
+    /* HERO */
+    .hero {
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+      text-align: center;
+    }
+    .hero-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero tag {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 1rem 0;
+      line-height: 1.2;
+    }
+    .hero h1 em {
+      color: #16a34a;
+      font-style: normal;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: #475569;
+      margin-bottom: 2rem;
+    }
+    .hero-btns {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover {
+      background: #15803d;
+    }
+    .btn-secondary {
+      background: #ffffff;
+      color: #334155;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #f1f5f9;
+    }
+
+    /* SEÇÕES GENÉRICAS */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .section-title tag {
+      color: #16a34a;
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .section-title h2 {
+      font-size: 2rem;
+      color: #0f172a;
+      margin-top: 0.25rem;
+    }
+    .section-title p {
+      color: #64748b;
+      margin-top: 0.5rem;
+    }
+
+    /* MAPA */
+    .mapa-box {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    /* PASSO A PASSO */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .step-card {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .step-num {
+      font-weight: 800;
+      color: #16a34a;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .step-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+    .step-card p {
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    /* QUIZ STYLES */
+    .quiz-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      border: 1px solid #e2e8f0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .quiz-option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 1rem 1.25rem;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: #334155;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .quiz-option-btn:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    footer strong {
+      color: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGAÇÃO -->
+  <nav>
+    <div class="logo">🌿 Eco<span>Lógica</span></div>
+    <div class="links">
+      <a href="#mapa">Pontos de Coleta</a>
+      <a href="#como">Como Descartar</a>
+      <a href="#quiz">Quiz Interativo</a>
+      <a href="#impacto">Impacto</a>
+      <a href="#cadastro">Cadastrar Ponto</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-container">
+      <tag>Grande Vitória — ES • Cidadania Ambiental</tag>
+      <h1>Descarte seu óleo.<br>Proteja <em>sua</em> cidade.</h1>
+      <p>1 litro de óleo contamina até 1 milhão de litros de água. Encontre o ponto de coleta mais próximo e faça a escolha certa.</p>
+      <div class="hero-btns">
+        <a href="#mapa" class="btn-primary">🗺️ Ver pontos de coleta</a>
+        <a href="#quiz" class="btn-secondary">🧠 Testar Conhecimento (Quiz)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAPA INTERATIVO -->
+  <section id="mapa">
+    <div class="section-title">
+      <tag>Mapa Interativo</tag>
+      <h2>Pontos de coleta na Grande Vitória</h2>
+      <p>Encontre o local mais próximo para descartar seu óleo de cozinha usado de forma correta e segura.</p>
+    </div>
+    <div class="mapa-box">
+      <p style="text-align: center; color: #64748b; padding: 2rem;">
+        📌 <strong>Locais mapeados:</strong> Serra, Vitória, Vila Velha e Cariacica.<br>
+        <em>[O componente do mapa interativo é renderizado aqui]</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- PASSO A PASSO -->
+  <section id="como">
+    <div class="section-title">
+      <tag>Passo a Passo</tag>
+      <h2>Como descartar corretamente</h2>
+      <p>Simples, fácil e com grande impacto. Veja como guardar e levar seu óleo ao ponto de coleta.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>🍳 Espere esfriar</h3>
+        <p>Após cozinhar, aguarde o óleo esfriar completamente antes de qualquer manuseio. Nunca descarte óleo quente.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>🫙 Guarde em garrafas</h3>
+        <p>Use garrafas PET ou potes de plástico com tampa. Feche bem para evitar derramamentos.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>📦 Acumule em casa</h3>
+        <p>Guarde as garrafas em local seco. Quando juntar uma quantidade razoável, leve ao ponto de coleta.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h3>🗺️ Encontre o ponto</h3>
+        <p>Use nosso mapa para encontrar o ponto de coleta mais próximo da sua casa ou trabalho.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO: QUIZ INTERATIVO COM 10 PERGUNTAS -->
+  <section id="quiz" style="background-color: #f1f5f9; border-radius: 20px; margin-top: 2rem; margin-bottom: 2rem;">
+    <div class="section-title">
+      <tag>Gamificação & Educação</tag>
+      <h2>Descubra seu Nível EcoLógico 🧠</h2>
+      <p>Responda às 10 perguntas e descubra qual é o seu grau real de consciência sobre o descarte de óleo.</p>
+    </div>
+
+    <div class="quiz-card">
+      <!-- Container das Perguntas -->
+      <div id="quiz-container">
+        <div style="margin-bottom: 1.5rem;">
+          <h3 id="question-text" style="font-size: 1.2rem; color: #1e293b; margin-bottom: 1.25rem; font-weight: 600;">Carregando pergunta...</h3>
+          <div id="options-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <!-- Opções injetadas via JavaScript -->
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1.25rem; margin-top: 1.5rem;">
+          <span id="progress-indicator" style="color: #64748b; font-size: 0.875rem; font-weight: 500;">Questão 1 de 10</span>
+          <button id="next-btn" onclick="proximaPergunta()" class="btn-primary" style="display: none; cursor: pointer; border: none;">Próxima Questão</button>
+        </div>
+      </div>
+
+      <!-- Container do Resultado (Escondido) -->
+      <div id="result-box" style="display: none; text-align: center; padding: 1rem 0;">
+        <span style="font-size: 0.9rem; font-weight: 700; color: #16a34a; text-transform: uppercase; letter-spacing: 0.05em;">Diagnóstico Concluído</span>
+        <h3 style="font-size: 1.5rem; color: #0f172a; margin-top: 0.5rem;">O seu resultado é:</h3>
+        
+        <div id="result-badge" style="font-size: 1.4rem; font-weight: 700; color: #15803d; margin: 1.5rem 0; padding: 1.25rem; background: #f0fdf4; border-radius: 12px; border: 1px solid #bbf7d0;"></div>
+        
+        <p id="result-description" style="color: #475569; font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;"></p>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <button onclick="reiniciarQuiz()" class="btn-secondary" style="cursor: pointer;">🔄 Refazer Quiz</button>
+          <a href="#mapa" class="btn-primary">🗺️ Ver Pontos de Coleta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACTO AMBIENTAL E SOCIAL -->
+  <section id="impacto">
+    <div class="section-title">
+      <tag>Por que isso importa</tag>
+      <h2>Impacto ambiental e social</h2>
+      <p>O descarte irregular do óleo de cozinha é um problema de saúde pública e de justiça socioambiental.</p>
+    </div>
+    <div style="background: #ffffff; padding: 2rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+      <h3 style="color: #16a34a; margin-bottom: 0.5rem;">⚖️ Base legal: Direitos Humanos e Cidadania</h3>
+      <p style="color: #475569; font-size: 0.95rem;">
+        O <strong>Art. 225 da Constituição Federal de 1988</strong> estabelece que todos têm direito ao meio ambiente ecologicamente equilibrado. A <strong>Lei nº 12.305/2010 (PNRS)</strong> inclui o óleo entre os resíduos que exigem destinação adequada. O acesso à informação e a pontos de coleta é uma questão de <strong>justiça socioambiental</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p style="margin-bottom: 0.5rem;">🌿 <strong>EcoLógica</strong> · Projeto de Extensão Interdisciplinar[cite: 1]</p>
+    <p>Curso de <strong>Sistemas de Informação</strong> · Multivix Serra · 2026.1</p>
+  </footer>
+
+  <!-- SCRIPT DO QUIZ COM 10 PERGUNTAS -->
+  <script>
+    const perguntas = [
+      {
+        pergunta: "1. Quantos litros de água potável podem ser contaminados por apenas 1 litro de óleo descartado na pia?",
+        opcoes: [
+          { texto: "Até 100 litros.", pontos: 0 },
+          { texto: "Até 1 milhão de litros.", pontos: 10 },
+          { texto: "Apenas 10 litros.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "2. Qual é a forma ideal de armazenar o óleo usado em casa antes de levar ao ponto de coleta?",
+        opcoes: [
+          { texto: "Guardar em garrafas PET limpas e bem vedadas.", pontos: 10 },
+          { texto: "Manter em potes abertos ao lado da pia.", pontos: 0 },
+          { texto: "Misturar com água quente e sabão em pó.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "3. Qual porcentagem aproximada dos entupimentos na rede de esgoto é causada por gordura e óleo?",
+        opcoes: [
+          { texto: "Cerca de 5%.", pontos: 0 },
+          { texto: "Aproximadamente 40%.", pontos: 10 },
+          { texto: "Mais de 90%.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "4. Por que o óleo não deve ser despejado no vaso sanitário ou no ralo?",
+        opcoes: [
+          { texto: "Porque ele solidifica nas tubulações, causando entupimentos e refluxo de esgoto.", pontos: 10 },
+          { texto: "Apenas porque deixa um cheiro desagradável.", pontos: 0 },
+          { texto: "Porque desgasta a cerâmica do vaso sanitário.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "5. Como o descarte inadequado de óleo afeta a vida aquática nos rios e mares?",
+        opcoes: [
+          { texto: "Cria uma película impermeável na superfície, impedindo a passagem de luz e oxigênio.", pontos: 10 },
+          { texto: "Alimenta os peixes, acelerando o seu crescimento.", pontos: 0 },
+          { texto: "Não causa impactos, pois o óleo se dissolve completamente na água salgada.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "6. Qual produto sustentável de alto valor pode ser produzido a partir da reciclagem do óleo de cozinha?",
+        opcoes: [
+          { texto: "Plástico sintético rígido.", pontos: 0 },
+          { texto: "Biodiesel e sabão ecológico.", pontos: 10 },
+          { texto: "Gás natural encanado.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "7. Por que o descarte de óleo incorreto também é uma questão de Justiça Social e Direitos Humanos?",
+        opcoes: [
+          { texto: "Porque o entupimento de redes afeta gravemente comunidades periféricas com menor saneamento.", pontos: 10 },
+          { texto: "Não tem relação com Direitos Humanos, é um problema estritamente técnico.", pontos: 0 },
+          { texto: "Porque apenas grandes empresas pagam pelo tratamento do esgoto.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "8. Qual legislação brasileira prevê a gestão adequada de resíduos e a responsabilidade compartilhada?",
+        opcoes: [
+          { texto: "Lei da Política Nacional de Resíduos Sólidos (Lei nº 12.305/2010).", pontos: 10 },
+          { texto: "Código de Trânsito Brasileiro.", pontos: 0 },
+          { texto: "Lei Geral de Proteção de Dados (LGPD).", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "9. O que NUNCA deve ser feito com o óleo de cozinha usado?",
+        opcoes: [
+          { texto: "Esperar esfriar antes de guardar.", pontos: 0 },
+          { texto: "Despejar em terrenos baldios ou diretamente no solo.", pontos: 10 },
+          { texto: "Entregar a catadores e cooperativas cadastradas.", pontos: 0 }
+        ]
+      },
+      {
+        pergunta: "10. Qual é o papel das tecnologias e sistemas de informação (como a plataforma EcoLógica) na causa ambiental?",
+        opcoes: [
+          { texto: "Facilitar o acesso à informação e mapear ecopontos para engajar a comunidade.", pontos: 10 },
+          { texto: "Apenas substituir o trabalho físico de coleta do óleo.", pontos: 0 },
+          { texto: "Substituir a necessidade de leis ambientais.", pontos: 0 }
+        ]
+      }
+    ];
+
+    let questaoAtual = 0;
+    let pontuacaoTotal = 0;
+
+    function carregarQuiz() {
+      const q = perguntas[questaoAtual];
+      document.getElementById("question-text").innerText = q.pergunta;
+      document.getElementById("progress-indicator").innerText = `Questão ${questaoAtual + 1} de ${perguntas.length}`;
+      
+      const optionsList = document.getElementById("options-list");
+      optionsList.innerHTML = "";
+      
+      q.opcoes.forEach((opcao) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-option-btn";
+        btn.innerText = opcao.texto;
+        btn.onclick = () => selecionarOpcao(opcao.pontos, btn);
+        optionsList.appendChild(btn);
+      });
+      document.getElementById("next-btn").style.display = "none";
+    }
+
+    function selecionarOpcao(pontos, elementoSelecionado) {
+      pontuacaoTotal += pontos;
+      
+      const botoes = document.getElementById("options-list").children;
+      for (let b of botoes) {
+        b.disabled = true;
+        b.style.cursor = "default";
+        if (b === elementoSelecionado && pontos > 0) {
+          b.style.background = "#dcfce7";
+          b.style.borderColor = "#16a34a";
+          b.style.color = "#15803d";
+        } else if (b === elementoSelecionado && pontos === 0) {
+          b.style.background = "#fee2e2";
+          b.style.borderColor = "#dc2626";
+          b.style.color = "#b91c1c";
+        }
+      }
+      document.getElementById("next-btn").style.display = "inline-block";
+    }
+
+    function proximaPergunta() {
+      questaoAtual++;
+      if (questaoAtual < perguntas.length) {
+        carregarQuiz();
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function mostrarResultado() {
+      document.getElementById("quiz-container").style.display = "none";
+      document.getElementById("result-box").style.display = "block";
+      
+      const badge = document.getElementById("result-badge");
+      const desc = document.getElementById("result-description");
+      
+      if (pontuacaoTotal >= 90) {
+        badge.innerHTML = "🏆 Nível: Mestre EcoLÓGICA ✨ (" + pontuacaoTotal + "/100 pts)";
+        desc.innerHTML = "Impressionante! Você acertou quase tudo e tem domínio completo sobre os impactos do óleo no meio ambiente e no saneamento. Continue espalhando esse conhecimento na sua comunidade!";
+      } else if (pontuacaoTotal >= 60) {
+        badge.innerHTML = "🌱 Nível: Guardião Sustentável 💧 (" + pontuacaoTotal + "/100 pts)";
+        desc.innerHTML = "Muito bom! Você possui uma sólida consciência ecológica e já entende a importância da logística reversa. Utilize nosso mapa para encontrar o ponto de coleta mais próximo!";
+      } else if (pontuacaoTotal >= 30) {
+        badge.innerHTML = "🔎 Nível: Eco-Curioso 🌿 (" + pontuacaoTotal + "/100 pts)";
+        desc.innerHTML = "Você já compreende que o óleo é um problema, mas ainda pode aprimorar alguns hábitos do dia a dia. Confira o nosso guia passo a passo para não errar no descarte!";
+      } else {
+        badge.innerHTML = "⚠️ Nível: Ralo Desatento 🚰 (" + pontuacaoTotal + "/100 pts)";
+        desc.innerHTML = "Você ainda tem bastante a aprender sobre os graves prejuízos do descarte incorreto. Explore o nosso site para transformar a sua rotina e proteger a sua cidade!";
+      }
+    }
+
+    function reiniciarQuiz() {
+      questaoAtual = 0;
+      pontuacaoTotal = 0;
+      document.getElementById("result-box").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      carregarQuiz();
+    }
+
+    // Inicialização do Quiz ao carregar a página
+    window.onload = carregarQuiz;
+  </script>
+</body>
+</html>
