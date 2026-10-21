@@ -111,6 +111,150 @@
   .section-sub { font-size: 1rem; color: var(--cinza-mid); max-width: 560px; line-height: 1.7; }
   .container { max-width: 1100px; margin: 0 auto; }
 
+<!-- SEÇÃO DO QUIZ ECO-LÓGICO (GAMIFICAÇÃO) -->
+<section id="quiz" style="padding: 4rem 1rem; background-color: #f8fafc; font-family: inherit;">
+  <div style="max-width: 800px; margin: 0 auto; background: #ffffff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <p style="color: #16a34a; font-weight: 600; text-transform: uppercase; font-size: 0.875rem;">Desafio Interativo</p>
+      <h2 style="font-size: 2rem; color: #1e293b; margin-top: 0.5rem;">Descubra seu Nível EcoLógico 🧠</h2>
+      <p style="color: #64748b; font-size: 1rem;">Responda rápido e descubra qual é o seu impacto real no descarte de óleo de cozinha.</p>
+    </div>
+
+    <!-- Container do Quiz -->
+    <div id="quiz-container">
+      <div id="question-box" style="margin-bottom: 1.5rem;">
+        <h3 id="question-text" style="font-size: 1.25rem; color: #334155; margin-bottom: 1rem;">Carregando pergunta...</h3>
+        <div id="options-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <!-- As opções serão injetadas via JavaScript -->
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+        <span id="progress-indicator" style="color: #64748b; font-size: 0.875rem;">Questão 1 de 3</span>
+        <button id="next-btn" onclick="proxima Pergunta()" style="background-color: #16a34a; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; display: none;">Próxima</button>
+      </div>
+    </div>
+
+    <!-- Container de Resultado (Oculto inicialmente) -->
+    <div id="result-box" style="display: none; text-align: center; padding: 1rem;">
+      <h3 style="font-size: 1.5rem; color: #1e293b; margin-bottom: 0.5rem;">O seu resultado:</h3>
+      <div id="result-badge" style="font-size: 1.5rem; font-weight: bold; color: #16a34a; margin: 1rem 0; padding: 1rem; background: #f0fdf4; border-radius: 8px;"></div>
+      <p id="result-description" style="color: #475569; font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;"></p>
+      <button onclick="reiniciarQuiz()" style="background-color: #0284c7; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer;">Refazer Quiz</button>
+    </div>
+  </div>
+</section>
+
+<!-- Script de Lógica do Quiz -->
+<script>
+  const perguntas = [
+    {
+      pergunta: "1. O que acontece quando você despeja 1 litro de óleo de cozinha usado diretamente na pia?",
+      opções: [
+        { texto: "Nada, ele se dissolve na água do esgoto.", pontuação: 0 },
+        { texto: "Contamina até 1 milhão de litros de água e gera entupimentos graves.", pontuação: 10 },
+        { texto: "Vira sabão automaticamente nas tubulações.", pontuação: 0 }
+      ]
+    },
+    {
+      pergunta: "2. Qual é a forma correta de armazenar o óleo após o uso na cozinha?",
+      opções: [
+        { texto: "Despejar em um terreno baldio ou quintal.", pontuação: 0 },
+        { texto: "Esperar esfriar, guardar em garrafa PET com tampa e acumular para reciclagem.", pontuação: 10 },
+        { texto: "Jogar no lixo comum ainda líquido em sacolas plásticas.", pontuação: 0 }
+      ]
+    },
+    {
+      pergunta: "3. Por que o descarte incorreto de óleo afeta especialmente as comunidades vulneráveis?",
+      opções: [
+        { texto: "Porque o entupimento de esgotos afeta mais regiões com infraestrutura precária e perto de córregos.", pontuação: 10 },
+        { texto: "Não afeta ninguém em específico, o impacto é igual para todos.", pontuação: 0 },
+        { texto: "Apenas encarece a conta de água de quem consome muito.", pontuação: 0 }
+      ]
+    }
+  ];
+
+  let questaoAtual = 0;
+  let pontuacaoTotal = 0;
+
+  function carregarQuiz() {
+    const q = perguntas[questaoAtual];
+    document.getElementById("question-text").innerText = q.pergunta;
+    document.getElementById("progress-indicator").innerText = `Questão ${questaoAtual + 1} de ${perguntas.length}`;
+    
+    const optionsList = document.getElementById("options-list");
+    optionsList.innerHTML = "";
+    
+    q.opções.forEach((opcao, index) => {
+      const btn = document.createElement("button");
+      btn.innerText = opcao.texto;
+      btn.style.cssText = "text-align: left; padding: 0.75rem 1rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-size: 1rem; color: #334155; transition: background 0.2s;";
+      btn.onmouseover = () => btn.style.background = "#f1f5f9";
+      btn.onmouseout = () => btn.style.background = "#f8fafc";
+      btn.onclick = () => selecionarOpcao(opcao.pontuação, btn);
+      optionsList.appendChild(btn);
+    });
+    document.getElementById("next-btn").style.display = "none";
+  }
+
+  function selecionarOpcao(pontos, elementoSelecionado) {
+    pontuacaoTotal += pontos;
+    
+    // Desativa todos os botões após a escolha
+    const botoes = document.getElementById("options-list").children;
+    for (let b of botoes) {
+      b.disabled = true;
+      b.style.cursor = "default";
+      if (b === elementoSelecionado && pontos > 0) {
+        b.style.background = "#dcfce7";
+        b.style.borderColor = "#16a34a";
+      } else if (b === elementoSelecionado && pontos === 0) {
+        b.style.background = "#fee2e2";
+        b.style.borderColor = "#dc2626";
+      }
+    }
+    document.getElementById("next-btn").style.display = "block";
+  }
+
+  function proximaPergunta() {
+    questaoAtual++;
+    if (questaoAtual < perguntas.length) {
+      carregarQuiz();
+    } else {
+      mostrarResultado();
+    }
+  }
+
+  function mostrarResultado() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("result-box").style.display = "block";
+    
+    const badge = document.getElementById("result-badge");
+    const desc = document.getElementById("result-description");
+    
+    if (pontuacaoTotal === 30) {
+      badge.innerHTML = "🏆 Nível: Mestre EcoLÓGICA ✨";
+      desc.innerHTML = "Excelente! Você domina os impactos socioambientais e já entende perfeitamente a importância do descarte correto. Continue inspirando sua comunidade!";
+    } else if (pontuacaoTotal >= 10) {
+      badge.innerHTML = "🌱 Nível: Guardião Sustentável 💧";
+      desc.innerHTML = "Muito bom! Você já tem uma ótima base de conscientização e sabe como proteger os recursos hídricos. Utilize nosso mapa para encontrar pontos de coleta!";
+    } else {
+      badge.innerHTML = "⚠️ Nível: Ralo Desatento 🚰";
+      desc.innerHTML = "Você ainda tem dúvidas sobre os riscos do descarte incorreto. Mas não se preocupe: explore o nosso passo a passo e o mapa para transformar seus hábitos hoje mesmo!";
+    }
+  }
+
+  function reiniciarQuiz() {
+    questaoAtual = 0;
+    pontuacaoTotal = 0;
+    document.getElementById("result-box").style.display = "none";
+    document.getElementById("quiz-container").style.display = "block";
+    carregarQuiz();
+  }
+
+  // Inicializa o quiz ao carregar a página
+  window.onload = carregarQuiz;
+</script>
+  
   /* ─── MAPA ─────────────────────────────────────────────── */
   #mapa { background: var(--branco); }
   .mapa-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; margin-top: 48px; }
